@@ -1,0 +1,2 @@
+111|casa|casa|12|caucasia|calle28b|12000|123903845
+AMENIDADES:12,12,12,12,12,
