@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include "Lista.h"
+#include <ostream>
 using namespace std;
 class Alojamiento; // Declaración adelantada
 
