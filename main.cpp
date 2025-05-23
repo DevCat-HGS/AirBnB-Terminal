@@ -7,12 +7,22 @@
 
 using namespace std;
 
+
+void limpiarPantalla() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+    }    
+
 int main() {
     SistemaUdeASay sistema;
     int opcion = 0;
     bool loggedIn = false;
     
-    cout << "===== Bienvenido al Sistema UdeASay ====="  << endl;
+  //  limpiarPantalla();
+    cout << "===== Bienvenido al Sistema UdeAStay ====="  << endl;
     
     while (true) {
         if (!loggedIn) {
@@ -27,12 +37,13 @@ int main() {
                     }
                     break;
                 case 2:
-                    cout << "Gracias por usar el Sistema UdeASay. ¡Hasta pronto!" << endl;
+                    cout << "Gracias por usar el Sistema UdeAStay. ¡Hasta pronto!" << endl;
                     return 0;
                 default:
                     cout << "Opción inválida. Intente nuevamente." << endl;
             }
         } else {
+           // limpiarPantalla();
             cout << "\n===== MENÚ PRINCIPAL =====";
             cout << "\n1. Registrar nuevo alojamiento";
             cout << "\n2. Registrar nuevo huésped";
