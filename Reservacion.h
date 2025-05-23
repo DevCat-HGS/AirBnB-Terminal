@@ -4,18 +4,18 @@
 #include <string>
 #include <iostream>
 #include <cstring> // Añadido para strcpy
-
+using namespace std;
 class Alojamiento; // Declaración adelantada
 class Huesped; // Declaración adelantada
 
 class Reservacion {
 private:
-    std::string codigo;
-    std::string fechaInicio;
+    string codigo;
+    string fechaInicio;
     int duracion;
-    std::string docHuesped;
-    std::string metodoPago;
-    std::string fechaPago;
+    string docHuesped;
+    string metodoPago;
+    string fechaPago;
     float monto;
     char observaciones[1000];
     Alojamiento* alojamiento;
@@ -23,8 +23,8 @@ private:
     
 public:
     // Constructor
-    Reservacion(std::string codigo = "", std::string fechaInicio = "", int duracion = 0,
-               std::string docHuesped = "", std::string metodoPago = "", std::string fechaPago = "",
+    Reservacion(string codigo = "", string fechaInicio = "", int duracion = 0,
+               string docHuesped = "", string metodoPago = "", string fechaPago = "",
                float monto = 0.0, Alojamiento* alojamiento = nullptr, Huesped* huesped = nullptr)
         : codigo(codigo), fechaInicio(fechaInicio), duracion(duracion), docHuesped(docHuesped),
           metodoPago(metodoPago), fechaPago(fechaPago), monto(monto), alojamiento(alojamiento),
@@ -33,23 +33,23 @@ public:
     }
     
     // Getters y setters
-    std::string getCodigo() const { return codigo; }
-    void setCodigo(std::string cod) { codigo = cod; }
+    string getCodigo() const { return codigo; }
+    void setCodigo(string cod) { codigo = cod; }
     
-    std::string getFechaInicio() const { return fechaInicio; }
-    void setFechaInicio(std::string fecha) { fechaInicio = fecha; }
+    string getFechaInicio() const { return fechaInicio; }
+    void setFechaInicio(string fecha) { fechaInicio = fecha; }
     
     int getDuracion() const { return duracion; }
     void setDuracion(int dur) { duracion = dur; }
     
-    std::string getDocHuesped() const { return docHuesped; }
-    void setDocHuesped(std::string doc) { docHuesped = doc; }
+    string getDocHuesped() const { return docHuesped; }
+    void setDocHuesped(string doc) { docHuesped = doc; }
     
-    std::string getMetodoPago() const { return metodoPago; }
-    void setMetodoPago(std::string metodo) { metodoPago = metodo; }
+    string getMetodoPago() const { return metodoPago; }
+    void setMetodoPago(string metodo) { metodoPago = metodo; }
     
-    std::string getFechaPago() const { return fechaPago; }
-    void setFechaPago(std::string fecha) { fechaPago = fecha; }
+    string getFechaPago() const { return fechaPago; }
+    void setFechaPago(string fecha) { fechaPago = fecha; }
     
     float getMonto() const { return monto; }
     void setMonto(float m) { monto = m; }
@@ -70,25 +70,25 @@ public:
         return true;
     }
     
-    std::string formatearFecha() {
+    string formatearFecha() {
         // Implementación básica: formatear la fecha para mostrarla
         return fechaInicio;
     }
     
     void imprimirComprobante() {
-        std::cout << "===== COMPROBANTE DE RESERVACIÓN ====="  << std::endl;
-        std::cout << "Código: " << codigo << std::endl;
-        std::cout << "Fecha de inicio: " << fechaInicio << std::endl;
-        std::cout << "Duración: " << duracion << " días" << std::endl;
-        std::cout << "Huésped: " << docHuesped << std::endl;
-        std::cout << "Método de pago: " << metodoPago << std::endl;
-        std::cout << "Fecha de pago: " << fechaPago << std::endl;
-        std::cout << "Monto: $" << monto << std::endl;
-        std::cout << "Observaciones: " << observaciones << std::endl;
+        cout << "===== COMPROBANTE DE RESERVACIÓN ====="  << endl;
+        cout << "Código: " << codigo << endl;
+        cout << "Fecha de inicio: " << fechaInicio << endl;
+        cout << "Duración: " << duracion << " días" << endl;
+        cout << "Huésped: " << docHuesped << endl;
+        cout << "Método de pago: " << metodoPago << endl;
+        cout << "Fecha de pago: " << fechaPago << endl;
+        cout << "Monto: $" << monto << endl;
+        cout << "Observaciones: " << observaciones << endl;
         if (alojamiento != nullptr) {
-            std::cout << "Alojamiento: " << alojamiento->getNombre() << std::endl;
+            cout << "Alojamiento: " << alojamiento->getNombre() << endl;
         }
-        std::cout << "===================================="  << std::endl;
+        cout << "===================================="  << endl;
     }
     
     // Sobrecarga del operador de igualdad para comparar reservaciones
@@ -97,7 +97,7 @@ public:
     }
     
     // Sobrecarga del operador de salida para mostrar información
-    friend std::ostream& operator<<(std::ostream& os, const Reservacion& reservacion) {
+    friend ostream& operator<<(ostream& os, const Reservacion& reservacion) {
         os << "Código: " << reservacion.codigo << "\n"
            << "Fecha de inicio: " << reservacion.fechaInicio << "\n"
            << "Duración: " << reservacion.duracion << " días\n"

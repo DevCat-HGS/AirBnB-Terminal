@@ -4,54 +4,54 @@
 #include <string>
 #include <iostream>
 #include "Lista.h"
-
+using namespace std;
 class Reservacion; // Declaración adelantada
 class Anfitrion; // Declaración adelantada
 
 class Alojamiento {
 private:
-    std::string codigo;
-    std::string nombre;
-    std::string tipo;
-    std::string departamento;
-    std::string municipio;
-    std::string direccion;
+    string codigo;
+    string nombre;
+    string tipo;
+    string departamento;
+    string municipio;
+    string direccion;
     float precioNoche;
-    Lista<std::string> amenidades;
+    Lista<string> amenidades;
     Anfitrion* anfitrion;
     Lista<Reservacion*> fechasReservadas;
     
 public:
     // Constructor
-    Alojamiento(std::string codigo = "", std::string nombre = "", std::string tipo = "", 
-               std::string departamento = "", std::string municipio = "", std::string direccion = "", 
+    Alojamiento(string codigo = "", string nombre = "", string tipo = "", 
+               string departamento = "", string municipio = "", string direccion = "", 
                float precioNoche = 0.0, Anfitrion* anfitrion = nullptr)
         : codigo(codigo), nombre(nombre), tipo(tipo), departamento(departamento),
           municipio(municipio), direccion(direccion), precioNoche(precioNoche), anfitrion(anfitrion) {}
     
     // Getters y setters
-    std::string getCodigo() const { return codigo; }
-    void setCodigo(std::string cod) { codigo = cod; }
+    string getCodigo() const { return codigo; }
+    void setCodigo(string cod) { codigo = cod; }
     
-    std::string getNombre() const { return nombre; }
-    void setNombre(std::string nom) { nombre = nom; }
+    string getNombre() const { return nombre; }
+    void setNombre(string nom) { nombre = nom; }
     
-    std::string getTipo() const { return tipo; }
-    void setTipo(std::string t) { tipo = t; }
+    string getTipo() const { return tipo; }
+    void setTipo(string t) { tipo = t; }
     
-    std::string getDepartamento() const { return departamento; }
-    void setDepartamento(std::string dep) { departamento = dep; }
+    string getDepartamento() const { return departamento; }
+    void setDepartamento(string dep) { departamento = dep; }
     
-    std::string getMunicipio() const { return municipio; }
-    void setMunicipio(std::string mun) { municipio = mun; }
+    string getMunicipio() const { return municipio; }
+    void setMunicipio(string mun) { municipio = mun; }
     
-    std::string getDireccion() const { return direccion; }
-    void setDireccion(std::string dir) { direccion = dir; }
+    string getDireccion() const { return direccion; }
+    void setDireccion(string dir) { direccion = dir; }
     
     float getPrecioNoche() const { return precioNoche; }
     void setPrecioNoche(float precio) { precioNoche = precio; }
     
-    Lista<std::string>& getAmenidades() { return amenidades; }
+    Lista<string>& getAmenidades() { return amenidades; }
     
     Anfitrion* getAnfitrion() const { return anfitrion; }
     void setAnfitrion(Anfitrion* anf) { anfitrion = anf; }
@@ -60,23 +60,23 @@ public:
     
     // Métodos según el diagrama UML
     void mostrarInfo() {
-        std::cout << "Código: " << codigo << std::endl;
-        std::cout << "Nombre: " << nombre << std::endl;
-        std::cout << "Tipo: " << tipo << std::endl;
-        std::cout << "Ubicación: " << municipio << ", " << departamento << std::endl;
-        std::cout << "Dirección: " << direccion << std::endl;
-        std::cout << "Precio por noche: $" << precioNoche << std::endl;
+        cout << "Código: " << codigo << endl;
+        cout << "Nombre: " << nombre << endl;
+        cout << "Tipo: " << tipo << endl;
+        cout << "Ubicación: " << municipio << ", " << departamento << endl;
+        cout << "Dirección: " << direccion << endl;
+        cout << "Precio por noche: $" << precioNoche << endl;
         
-        std::cout << "Amenidades: ";
-        Nodo<std::string>* actual = amenidades.getCabeza();
+        cout << "Amenidades: ";
+        Nodo<string>* actual = amenidades.getCabeza();
         while (actual != nullptr) {
-            std::cout << actual->getDato() << ", ";
+            cout << actual->getDato() << ", ";
             actual = actual->getSiguiente();
         }
-        std::cout << std::endl;
+        cout << endl;
     }
     
-    bool verificarDisponibilidad(std::string inicio, std::string fin) {
+    bool verificarDisponibilidad(string inicio, string fin) {
         // Implementación básica: verificar si hay alguna reserva que se solape
         Nodo<Reservacion*>* actual = fechasReservadas.getCabeza();
         while (actual != nullptr) {
@@ -102,7 +102,7 @@ public:
     }
     
     // Sobrecarga del operador de salida para mostrar información
-    friend std::ostream& operator<<(std::ostream& os, const Alojamiento& alojamiento) {
+    friend ostream& operator<<(ostream& os, const Alojamiento& alojamiento) {
         os << "Código: " << alojamiento.codigo << "\n"
            << "Nombre: " << alojamiento.nombre << "\n"
            << "Tipo: " << alojamiento.tipo << "\n"

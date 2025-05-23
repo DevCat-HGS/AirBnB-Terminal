@@ -4,24 +4,24 @@
 #include <string>
 #include <iostream>
 #include "Lista.h"
-
+using namespace std;
 class Alojamiento; // Declaración adelantada
 
 class Anfitrion {
 private:
-    std::string documento;
+    string documento;
     int antiguedad;
     float puntuacion;
     Lista<Alojamiento*> alojamientos;
     
 public:
     // Constructor
-    Anfitrion(std::string documento = "", int antiguedad = 0, float puntuacion = 0.0)
+    Anfitrion(string documento = "", int antiguedad = 0, float puntuacion = 0.0)
         : documento(documento), antiguedad(antiguedad), puntuacion(puntuacion) {}
     
     // Getters y setters
-    std::string getDocumento() const { return documento; }
-    void setDocumento(std::string doc) { documento = doc; }
+    string getDocumento() const { return documento; }
+    void setDocumento(string doc) { documento = doc; }
     
     int getAntiguedad() const { return antiguedad; }
     void setAntiguedad(int ant) { antiguedad = ant; }

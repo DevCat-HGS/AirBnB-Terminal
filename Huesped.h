@@ -4,28 +4,28 @@
 #include <string>
 #include <iostream>
 #include "Lista.h"
-
+using namespace std;
 class Reservacion; // Declaración adelantada
 
 class Huesped {
 private:
-    std::string documento;
-    std::string nombre;
+    string documento;
+    string nombre;
     int antiguedadMeses;
     float puntuacion;
     Lista<Reservacion*> reservacionesActivas;
     
 public:
     // Constructor
-    Huesped(std::string documento = "", std::string nombre = "", int antiguedadMeses = 0, float puntuacion = 0.0)
+    Huesped(string documento = "", string nombre = "", int antiguedadMeses = 0, float puntuacion = 0.0)
         : documento(documento), nombre(nombre), antiguedadMeses(antiguedadMeses), puntuacion(puntuacion) {}
     
     // Getters y setters
-    std::string getDocumento() const { return documento; }
-    void setDocumento(std::string doc) { documento = doc; }
+    string getDocumento() const { return documento; }
+    void setDocumento(string doc) { documento = doc; }
     
-    std::string getNombre() const { return nombre; }
-    void setNombre(std::string nom) { nombre = nom; }
+    string getNombre() const { return nombre; }
+    void setNombre(string nom) { nombre = nom; }
     
     int getAntiguedadMeses() const { return antiguedadMeses; }
     void setAntiguedadMeses(int meses) { antiguedadMeses = meses; }
@@ -41,7 +41,7 @@ public:
     }
     
     // Método para mostrar información del huésped
-    friend std::ostream& operator<<(std::ostream& os, const Huesped& huesped) {
+    friend ostream& operator<<(ostream& os, const Huesped& huesped) {
         os << "Documento: " << huesped.documento << "\n"
            << "Nombre: " << huesped.nombre << "\n"
            << "Antigüedad (meses): " << huesped.antiguedadMeses << "\n"

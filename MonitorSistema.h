@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-
+using namespace std;
 class MonitorSistema {
 private:
     size_t memoriaTotal;
@@ -31,18 +31,18 @@ public:
     }
     
     void reporte() {
-        std::cout << "===== REPORTE DEL SISTEMA ====="  << std::endl;
-        std::cout << "Memoria total utilizada: " << memoriaTotal << " bytes" << std::endl;
-        std::cout << "Interacciones totales: " << interaccionesTotales << std::endl;
-        std::cout << "===================================="  << std::endl;
+        cout << "===== REPORTE DEL SISTEMA ====="  << endl;
+        cout << "Memoria total utilizada: " << memoriaTotal << " bytes" << endl;
+        cout << "Interacciones totales: " << interaccionesTotales << endl;
+        cout << "===================================="  << endl;
         
         // Guardar reporte en archivo
-        std::ofstream archivo("reporte_sistema.txt", std::ios::app);
+        ofstream archivo("reporte_sistema.txt", ios::app);
         if (archivo.is_open()) {
-            archivo << "===== REPORTE DEL SISTEMA ====="  << std::endl;
-            archivo << "Memoria total utilizada: " << memoriaTotal << " bytes" << std::endl;
-            archivo << "Interacciones totales: " << interaccionesTotales << std::endl;
-            archivo << "====================================" << std::endl;
+            archivo << "===== REPORTE DEL SISTEMA ====="  << endl;
+            archivo << "Memoria total utilizada: " << memoriaTotal << " bytes" << endl;
+            archivo << "Interacciones totales: " << interaccionesTotales << endl;
+            archivo << "====================================" << endl;
             archivo.close();
         }
     }

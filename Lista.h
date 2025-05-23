@@ -3,7 +3,7 @@
 
 #include "Nodo.h"
 #include <iostream>
-
+using namespace std;
 template <typename T>
 class Lista {
 private:
@@ -64,7 +64,7 @@ public:
     void recorrer() {
         Nodo<T>* actual = cabeza;
         while (actual != nullptr) {
-            std::cout << actual->getDato() << std::endl;
+            cout << actual->getDato() << endl;
             actual = actual->getSiguiente();
         }
     }
