@@ -185,7 +185,7 @@ private:
             if (!datos[7].empty()) {
                 Anfitrion anfitrionBusqueda;
                 anfitrionBusqueda.setDocumento(datos[7]);
-                Anfitrion* anfitrion = anfitriones.buscar(anfitrionBusqueda);
+                Anfitrion* anfitrion = anfitriones.buscar(&anfitrionBusqueda);
                 if (anfitrion != nullptr) {
                     alojamiento->setAnfitrion(anfitrion);
                     anfitrion->getAlojamientos().agregar(alojamiento);
@@ -318,7 +318,7 @@ private:
             if (!datos[8].empty()) {
                 Alojamiento alojamientoBusqueda;
                 alojamientoBusqueda.setCodigo(datos[8]);
-                Alojamiento* alojamiento = alojamientos.buscar(alojamientoBusqueda);
+                Alojamiento* alojamiento = alojamientos.buscar(&alojamientoBusqueda);
                 if (alojamiento != nullptr) {
                     reservacion->setAlojamiento(alojamiento);
                     alojamiento->getFechasReservadas().agregar(reservacion);
@@ -329,7 +329,7 @@ private:
             if (!datos[9].empty()) {
                 Huesped huespedBusqueda;
                 huespedBusqueda.setDocumento(datos[9]);
-                Huesped* huesped = huespedes.buscar(huespedBusqueda);
+                Huesped* huesped = huespedes.buscar(&huespedBusqueda);
                 if (huesped != nullptr) {
                     reservacion->setHuesped(huesped);
                     huesped->getReservacionesActivas().agregar(reservacion);
@@ -376,7 +376,7 @@ public:
         // Verificar si ya existe un alojamiento con ese código
         Alojamiento alojamientoBusqueda;
         alojamientoBusqueda.setCodigo(codigo);
-        if (alojamientos.buscar(alojamientoBusqueda) != nullptr) {
+        if (alojamientos.buscar(&alojamientoBusqueda) != nullptr) {
             std::cout << "Ya existe un alojamiento con ese código." << std::endl;
             return;
         }
@@ -406,7 +406,7 @@ public:
         // Buscar anfitrión
         Anfitrion anfitrionBusqueda;
         anfitrionBusqueda.setDocumento(docAnfitrion);
-        Anfitrion* anfitrion = anfitriones.buscar(anfitrionBusqueda);
+        Anfitrion* anfitrion = anfitriones.buscar(&anfitrionBusqueda);
         
         if (anfitrion == nullptr) {
             std::cout << "No se encontró un anfitrión con ese documento. ¿Desea registrarlo? (s/n): ";
@@ -535,7 +535,7 @@ public:
         // Buscar huésped
         Huesped huespedBusqueda;
         huespedBusqueda.setDocumento(docHuesped);
-        Huesped* huesped = huespedes.buscar(huespedBusqueda);
+        Huesped* huesped = huespedes.buscar(&huespedBusqueda);
         
         if (huesped == nullptr) {
             std::cout << "No se encontró un huésped con ese documento." << std::endl;
@@ -604,7 +604,7 @@ public:
         // Buscar reservación
         Reservacion reservacionBusqueda;
         reservacionBusqueda.setCodigo(codigoReservacion);
-        Reservacion* reservacion = reservaciones.buscar(reservacionBusqueda);
+        Reservacion* reservacion = reservaciones.buscar(&reservacionBusqueda);
         
         if (reservacion == nullptr) {
             std::cout << "No se encontró una reservación con ese código." << std::endl;
