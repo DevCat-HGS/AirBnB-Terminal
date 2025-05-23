@@ -69,11 +69,11 @@ public:
         }
     }
     
-    T* buscar(T dato) {
+    T buscar(T dato) {
         Nodo<T>* actual = cabeza;
         while (actual != nullptr) {
-            if (actual->getDato() == dato) {
-                return &(actual->getDato());
+            if (*(actual->getDato()) == *dato) {
+                return actual->getDato();  // ya es T (es decir, Anfitrion*)
             }
             actual = actual->getSiguiente();
         }

@@ -33,11 +33,11 @@ public:
     
     // Sobrecarga del operador de igualdad para comparar anfitriones
     bool operator==(const Anfitrion& otro) const {
-        return documento == otro.documento;
+        return this->documento == otro.documento;
     }
-    
+
     // Sobrecarga del operador de salida para mostrar información
-    friend std::ostream& operator<<(std::ostream& os, const Anfitrion& anfitrion) {
+    friend ostream& operator<<(ostream& os, const Anfitrion& anfitrion) {
         os << "Documento: " << anfitrion.documento << "\n"
            << "Antigüedad: " << anfitrion.antiguedad << " años\n"
            << "Puntuación: " << anfitrion.puntuacion;

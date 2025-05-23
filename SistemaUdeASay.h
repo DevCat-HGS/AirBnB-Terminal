@@ -183,13 +183,13 @@ private:
             
             // Asignar anfitrión si existe
             if (!datos[7].empty()) {
-                Anfitrion anfitrionBusqueda;
-                anfitrionBusqueda.setDocumento(datos[7]);
-                Anfitrion* anfitrion = anfitriones.buscar(&anfitrionBusqueda);
+                Anfitrion* anfitrionBusqueda = new Anfitrion();
+                anfitrionBusqueda->setDocumento(datos[7]);
+                Anfitrion* anfitrion = anfitriones.buscar(anfitrionBusqueda);
                 if (anfitrion != nullptr) {
-                    alojamiento->setAnfitrion(anfitrion);
-                    anfitrion->getAlojamientos().agregar(alojamiento);
+                    alojamiento->setAnfitrion(anfitrion);                    anfitrion->getAlojamientos().agregar(alojamiento);
                 }
+                delete anfitrionBusqueda; // Liberar memoria del objeto temporal
             }
             
             alojamientos.agregar(alojamiento);
@@ -316,24 +316,26 @@ private:
             
             // Asignar alojamiento si existe
             if (!datos[8].empty()) {
-                Alojamiento alojamientoBusqueda;
-                alojamientoBusqueda.setCodigo(datos[8]);
-                Alojamiento* alojamiento = alojamientos.buscar(&alojamientoBusqueda);
+                Alojamiento* alojamientoBusqueda = new Alojamiento();
+                alojamientoBusqueda->setCodigo(datos[8]);
+                Alojamiento* alojamiento = alojamientos.buscar(alojamientoBusqueda);
                 if (alojamiento != nullptr) {
                     reservacion->setAlojamiento(alojamiento);
                     alojamiento->getFechasReservadas().agregar(reservacion);
                 }
+                delete alojamientoBusqueda; // Liberar memoria del objeto temporal
             }
             
             // Asignar huésped si existe
             if (!datos[9].empty()) {
-                Huesped huespedBusqueda;
-                huespedBusqueda.setDocumento(datos[9]);
-                Huesped* huesped = huespedes.buscar(&huespedBusqueda);
+                Huesped* huespedBusqueda = new Huesped();
+                huespedBusqueda->setDocumento(datos[9]);
+                Huesped* huesped = huespedes.buscar(huespedBusqueda);
                 if (huesped != nullptr) {
                     reservacion->setHuesped(huesped);
                     huesped->getReservacionesActivas().agregar(reservacion);
                 }
+                delete huespedBusqueda; // Liberar memoria del objeto temporal
             }
             
             reservaciones.agregar(reservacion);
@@ -374,12 +376,14 @@ public:
         std::cin >> codigo;
         
         // Verificar si ya existe un alojamiento con ese código
-        Alojamiento alojamientoBusqueda;
-        alojamientoBusqueda.setCodigo(codigo);
-        if (alojamientos.buscar(&alojamientoBusqueda) != nullptr) {
+        Alojamiento* alojamientoBusqueda = new Alojamiento();
+        alojamientoBusqueda->setCodigo(codigo);
+        if (alojamientos.buscar(alojamientoBusqueda) != nullptr) {
+            delete alojamientoBusqueda; // Liberar memoria del objeto temporal
             std::cout << "Ya existe un alojamiento con ese código." << std::endl;
             return;
         }
+        delete alojamientoBusqueda; // Liberar memoria del objeto temporal
         
         std::cin.ignore();
         std::cout << "Nombre: ";
@@ -404,9 +408,10 @@ public:
         std::cin >> docAnfitrion;
         
         // Buscar anfitrión
-        Anfitrion anfitrionBusqueda;
-        anfitrionBusqueda.setDocumento(docAnfitrion);
-        Anfitrion* anfitrion = anfitriones.buscar(&anfitrionBusqueda);
+        Anfitrion* anfitrionBusqueda = new Anfitrion();
+        anfitrionBusqueda->setDocumento(docAnfitrion);
+        Anfitrion* anfitrion = anfitriones.buscar(anfitrionBusqueda);
+        delete anfitrionBusqueda; // Liberar memoria del objeto temporal
         
         if (anfitrion == nullptr) {
             std::cout << "No se encontró un anfitrión con ese documento. ¿Desea registrarlo? (s/n): ";
@@ -466,12 +471,14 @@ public:
         std::cin >> documento;
         
         // Verificar si ya existe un huésped con ese documento
-        Huesped huespedBusqueda;
-        huespedBusqueda.setDocumento(documento);
+        Huesped* huespedBusqueda = new Huesped();
+        huespedBusqueda->setDocumento(documento);
         if (huespedes.buscar(huespedBusqueda) != nullptr) {
+            delete huespedBusqueda; // Liberar memoria del objeto temporal
             std::cout << "Ya existe un huésped con ese documento." << std::endl;
             return;
         }
+        delete huespedBusqueda; // Liberar memoria del objeto temporal
         
         std::cin.ignore();
         std::cout << "Nombre: ";
@@ -512,9 +519,10 @@ public:
         std::cin >> codigoAlojamiento;
         
         // Buscar alojamiento
-        Alojamiento alojamientoBusqueda;
-        alojamientoBusqueda.setCodigo(codigoAlojamiento);
+        Alojamiento* alojamientoBusqueda = new Alojamiento();
+        alojamientoBusqueda->setCodigo(codigoAlojamiento);
         Alojamiento* alojamiento = alojamientos.buscar(alojamientoBusqueda);
+        delete alojamientoBusqueda; // Liberar memoria del objeto temporal
         
         if (alojamiento == nullptr) {
             std::cout << "No se encontró un alojamiento con ese código." << std::endl;
@@ -533,9 +541,10 @@ public:
         std::cin >> docHuesped;
         
         // Buscar huésped
-        Huesped huespedBusqueda;
-        huespedBusqueda.setDocumento(docHuesped);
-        Huesped* huesped = huespedes.buscar(&huespedBusqueda);
+        Huesped* huespedBusqueda = new Huesped();
+        huespedBusqueda->setDocumento(docHuesped);
+        Huesped* huesped = huespedes.buscar(huespedBusqueda);
+        delete huespedBusqueda; // Liberar memoria del objeto temporal
         
         if (huesped == nullptr) {
             std::cout << "No se encontró un huésped con ese documento." << std::endl;
