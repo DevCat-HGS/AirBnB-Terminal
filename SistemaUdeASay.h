@@ -180,6 +180,9 @@ private:
                 datos[5], // direccion
                 stof(datos[6]) // precioNoche
             );
+            monitor.sumarMemoria(sizeof(Reservacion));
+            monitor.sumarMemoria(sizeof(Huesped));
+            monitor.sumarMemoria(sizeof(Anfitrion));
             monitor.sumarMemoria(sizeof(Alojamiento));
             
             // Asignar anfitrión si existe
@@ -227,11 +230,13 @@ private:
             
             // Crear anfitrión
             Anfitrion* anfitrion = new Anfitrion(
-            monitor.sumarMemoria(sizeof(Anfitrion));
                 datos[0], // documento
                 stoi(datos[1]), // antiguedad
                 stof(datos[2]) // puntuacion
             );
+            monitor.sumarMemoria(sizeof(Reservacion));
+            monitor.sumarMemoria(sizeof(Huesped));
+            monitor.sumarMemoria(sizeof(Anfitrion));
             
             anfitriones.agregar(anfitrion);
         }
@@ -266,12 +271,14 @@ private:
             
             // Crear huésped
             Huesped* huesped = new Huesped(
-            monitor.sumarMemoria(sizeof(Huesped));
                 datos[0], // documento
                 datos[1], // nombre
                 stoi(datos[2]), // antiguedadMeses
                 stof(datos[3]) // puntuacion
             );
+            monitor.sumarMemoria(sizeof(Reservacion));
+            monitor.sumarMemoria(sizeof(Huesped));
+            monitor.sumarMemoria(sizeof(Anfitrion));
             
             huespedes.agregar(huesped);
         }
@@ -306,7 +313,6 @@ private:
             
             // Crear reservación
             Reservacion* reservacion = new Reservacion(
-            monitor.sumarMemoria(sizeof(Reservacion));
                 datos[0], // codigo
                 datos[1], // fechaInicio
                 stoi(datos[2]), // duracion
@@ -315,6 +321,9 @@ private:
                 datos[5], // fechaPago
                 stof(datos[6]) // monto
             );
+            monitor.sumarMemoria(sizeof(Reservacion));
+            monitor.sumarMemoria(sizeof(Huesped));
+            monitor.sumarMemoria(sizeof(Anfitrion));
             
             // Asignar observaciones
             reservacion->setObservaciones(datos[7].c_str());
