@@ -31,6 +31,7 @@ private:
         
         Nodo<Alojamiento*>* actual = alojamientos.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             Alojamiento* alojamiento = actual->getDato();
             archivo << alojamiento->getCodigo() << "|"
                     << alojamiento->getNombre() << "|"
@@ -67,6 +68,7 @@ private:
         
         Nodo<Anfitrion*>* actual = anfitriones.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             Anfitrion* anfitrion = actual->getDato();
             archivo << anfitrion->getDocumento() << "|"
                     << anfitrion->getAntiguedad() << "|"
@@ -87,6 +89,7 @@ private:
         
         Nodo<Huesped*>* actual = huespedes.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             Huesped* huesped = actual->getDato();
             archivo << huesped->getDocumento() << "|"
                     << huesped->getNombre() << "|"
@@ -108,6 +111,7 @@ private:
         
         Nodo<Reservacion*>* actual = reservaciones.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             Reservacion* reservacion = actual->getDato();
             archivo << reservacion->getCodigo() << "|"
                     << reservacion->getFechaInicio() << "|"
@@ -135,6 +139,7 @@ private:
         
         string linea;
         while (getline(archivo, linea)) {
+            monitor.registrarIteracion();
             if (linea.empty()) continue;
             
             if (linea.substr(0, 11) == "AMENIDADES:") {
@@ -212,6 +217,7 @@ private:
         
         string linea;
         while (getline(archivo, linea)) {
+            monitor.registrarIteracion();
             if (linea.empty()) continue;
             
             size_t pos = 0;
@@ -253,6 +259,7 @@ private:
         
         string linea;
         while (getline(archivo, linea)) {
+            monitor.registrarIteracion();
             if (linea.empty()) continue;
             
             size_t pos = 0;
@@ -295,6 +302,7 @@ private:
         
         string linea;
         while (getline(archivo, linea)) {
+            monitor.registrarIteracion();
             if (linea.empty()) continue;
             
             size_t pos = 0;
@@ -530,6 +538,7 @@ public:
         cout << "Alojamientos disponibles:" << endl;
         Nodo<Alojamiento*>* actualAloj = alojamientos.getCabeza();
         while (actualAloj != nullptr) {
+            monitor.registrarIteracion();
             cout << actualAloj->getDato()->getCodigo() << " - " << actualAloj->getDato()->getNombre() << endl;
             actualAloj = actualAloj->getSiguiente();
         }
@@ -552,6 +561,7 @@ public:
         cout << "Huéspedes registrados:" << endl;
         Nodo<Huesped*>* actualHues = huespedes.getCabeza();
         while (actualHues != nullptr) {
+            monitor.registrarIteracion();
             cout << actualHues->getDato()->getDocumento() << " - " << actualHues->getDato()->getNombre() << endl;
             actualHues = actualHues->getSiguiente();
         }
@@ -682,6 +692,7 @@ public:
         
         Nodo<Alojamiento*>* actual = alojamientos.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             actual->getDato()->mostrarInfo();
             cout << "-----------------------------------" << endl;
             actual = actual->getSiguiente();
@@ -700,6 +711,7 @@ public:
         
         Nodo<Huesped*>* actual = huespedes.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             cout << *actual->getDato() << endl;
             cout << "-----------------------------------" << endl;
             actual = actual->getSiguiente();
@@ -718,6 +730,7 @@ public:
         
         Nodo<Reservacion*>* actual = reservaciones.getCabeza();
         while (actual != nullptr) {
+            monitor.registrarIteracion();
             actual->getDato()->imprimirComprobante();
             cout << "-----------------------------------" << endl;
             actual = actual->getSiguiente();
