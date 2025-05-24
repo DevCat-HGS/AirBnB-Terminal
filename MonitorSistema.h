@@ -7,41 +7,41 @@ using namespace std;
 class MonitorSistema {
 private:
     size_t memoriaTotal;
-    int interaccionesTotales;
+    int iteracionesTotales;
     
 public:
     // Constructor
-    MonitorSistema() : memoriaTotal(0), interaccionesTotales(0) {}
+    MonitorSistema() : memoriaTotal(0), iteracionesTotales(0) {}
     
     // Métodos según el diagrama UML
     void sumarMemoria(size_t bytes) {
         memoriaTotal += bytes;
     }
     
-    void registrarInteraccion() {
-        interaccionesTotales++;
+    void registrarIteracion() {
+        iteracionesTotales++;
     }
     
     size_t obtenerMemoria() const {
         return memoriaTotal;
     }
     
-    int obtenerInteracciones() const {
-        return interaccionesTotales;
+    int obtenerIteraciones() const {
+        return iteracionesTotales;
     }
     
     void reporte() {
         cout << "===== REPORTE DEL SISTEMA ====="  << endl;
         cout << "Memoria total utilizada: " << memoriaTotal << " bytes" << endl;
-        cout << "Interacciones totales: " << interaccionesTotales << endl;
-        cout << "===================================="  << endl;
+        cout << "Iteraciones totales: " << iteracionesTotales << endl;
+        cout << "====================================" << endl;
         
         // Guardar reporte en archivo
         ofstream archivo("reporte_sistema.txt", ios::app);
         if (archivo.is_open()) {
-            archivo << "===== REPORTE DEL SISTEMA ====="  << endl;
+            archivo << "===== REPORTE DEL SISTEMA =====" << endl;
             archivo << "Memoria total utilizada: " << memoriaTotal << " bytes" << endl;
-            archivo << "Interacciones totales: " << interaccionesTotales << endl;
+            archivo << "Iteraciones totales: " << iteracionesTotales << endl;
             archivo << "====================================" << endl;
             archivo.close();
         }

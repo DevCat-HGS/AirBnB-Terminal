@@ -458,7 +458,7 @@ public:
         anfitrion->getAlojamientos().agregar(alojamiento);
         
         cout << "Alojamiento registrado correctamente." << endl;
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void registrarHuesped() {
@@ -497,7 +497,7 @@ public:
         huespedes.agregar(huesped);
         
         cout << "Huésped registrado correctamente." << endl;
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void realizarReservacion() {
@@ -600,7 +600,7 @@ public:
         
         cout << "Reservación realizada correctamente." << endl;
         reservacion->imprimirComprobante();
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void cancelarReserva() {
@@ -634,7 +634,7 @@ public:
         delete reservacion;
         
         cout << "Reservación cancelada correctamente." << endl;
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void cargarDatos() {
@@ -668,7 +668,7 @@ public:
             actual = actual->getSiguiente();
         }
         
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void consultarHuespedes() {
@@ -686,7 +686,7 @@ public:
             actual = actual->getSiguiente();
         }
         
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void consultarReservaciones() {
@@ -704,7 +704,7 @@ public:
             actual = actual->getSiguiente();
         }
         
-        monitor.registrarInteraccion();
+        monitor.registrarIteracion();
     }
     
     void actualizarHistorico() {
