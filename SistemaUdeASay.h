@@ -180,10 +180,12 @@ private:
                 datos[5], // direccion
                 stof(datos[6]) // precioNoche
             );
+            monitor.sumarMemoria(sizeof(Alojamiento));
             
             // Asignar anfitrión si existe
             if (!datos[7].empty()) {
                 Anfitrion* anfitrionBusqueda = new Anfitrion();
+                monitor.sumarMemoria(sizeof(Anfitrion));
                 anfitrionBusqueda->setDocumento(datos[7]);
                 Anfitrion* anfitrion = anfitriones.buscar(anfitrionBusqueda);
                 if (anfitrion != nullptr) {
@@ -225,6 +227,7 @@ private:
             
             // Crear anfitrión
             Anfitrion* anfitrion = new Anfitrion(
+            monitor.sumarMemoria(sizeof(Anfitrion));
                 datos[0], // documento
                 stoi(datos[1]), // antiguedad
                 stof(datos[2]) // puntuacion
@@ -263,6 +266,7 @@ private:
             
             // Crear huésped
             Huesped* huesped = new Huesped(
+            monitor.sumarMemoria(sizeof(Huesped));
                 datos[0], // documento
                 datos[1], // nombre
                 stoi(datos[2]), // antiguedadMeses
@@ -302,6 +306,7 @@ private:
             
             // Crear reservación
             Reservacion* reservacion = new Reservacion(
+            monitor.sumarMemoria(sizeof(Reservacion));
                 datos[0], // codigo
                 datos[1], // fechaInicio
                 stoi(datos[2]), // duracion
@@ -317,6 +322,7 @@ private:
             // Asignar alojamiento si existe
             if (!datos[8].empty()) {
                 Alojamiento* alojamientoBusqueda = new Alojamiento();
+            monitor.sumarMemoria(sizeof(Alojamiento));
                 alojamientoBusqueda->setCodigo(datos[8]);
                 Alojamiento* alojamiento = alojamientos.buscar(alojamientoBusqueda);
                 if (alojamiento != nullptr) {
@@ -329,6 +335,7 @@ private:
             // Asignar huésped si existe
             if (!datos[9].empty()) {
                 Huesped* huespedBusqueda = new Huesped();
+            monitor.sumarMemoria(sizeof(Huesped));
                 huespedBusqueda->setDocumento(datos[9]);
                 Huesped* huesped = huespedes.buscar(huespedBusqueda);
                 if (huesped != nullptr) {
@@ -429,6 +436,7 @@ public:
                 cin >> puntuacion;
                 
                 anfitrion = new Anfitrion(docAnfitrion, antiguedad, puntuacion);
+            monitor.sumarMemoria(sizeof(Anfitrion));
                 anfitriones.agregar(anfitrion);
                 cout << "Anfitrión registrado correctamente." << endl;
             } else {
@@ -439,6 +447,7 @@ public:
         
         // Crear alojamiento
         Alojamiento* alojamiento = new Alojamiento(codigo, nombre, tipo, departamento, municipio, direccion, precioNoche, anfitrion);
+        monitor.sumarMemoria(sizeof(Alojamiento));
         
         // Agregar amenidades
         cout << "¿Cuántas amenidades desea agregar?: ";
@@ -492,6 +501,7 @@ public:
         
         // Crear huésped
         Huesped* huesped = new Huesped(documento, nombre, antiguedadMeses, puntuacion);
+        monitor.sumarMemoria(sizeof(Huesped));
         
         // Agregar huésped al sistema
         huespedes.agregar(huesped);

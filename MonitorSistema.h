@@ -37,7 +37,7 @@ public:
         cout << "====================================" << endl;
         
         // Guardar reporte en archivo
-        ofstream archivo("reporte_sistema.txt", ios::app);
+        ofstream archivo("reporte_sistema.txt");
         if (archivo.is_open()) {
             archivo << "===== REPORTE DEL SISTEMA =====" << endl;
             archivo << "Memoria total utilizada: " << memoriaTotal << " bytes" << endl;
