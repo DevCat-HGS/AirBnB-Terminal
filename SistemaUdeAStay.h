@@ -1,5 +1,5 @@
-#ifndef SISTEMAUDEASAY_H
-#define SISTEMAUDEASAY_H
+#ifndef SISTEMAUDEASTAY_H
+#define SISTEMAUDEASTAY_H
 
 #include <iostream>
 #include <fstream>
@@ -13,7 +13,7 @@
 #include "Anfitrion.h"
 #include "MonitorSistema.h"
 using namespace std;
-class SistemaUdeASay {
+class SistemaUdeAStay {
 private:
     Lista<Alojamiento*> alojamientos;
     Lista<Anfitrion*> anfitriones;
@@ -370,7 +370,7 @@ private:
     
 public:
     // Constructor
-    SistemaUdeASay() {}
+    SistemaUdeAStay() {}
     
     // Métodos según el diagrama UML
     bool login() {

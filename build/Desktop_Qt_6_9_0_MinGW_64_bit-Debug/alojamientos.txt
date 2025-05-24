@@ -1,0 +1,5 @@
+1234A|CASA1|Casa|Antioquia|Caucasia|calle 23|5000|123456789
+AMENIDADES:ba¤o,piscina,caja fuerte,Cama,
+45678|Malecon|apartamento|A2C5|Caucasia|Troncal via principal|30000|098098098
+543543543|PepitoSanchez|Casa|A1A1|Caucasia|123 AVENIDA SIEMPRE VIVA|34520|123223
+AMENIDADES:BA¥O,

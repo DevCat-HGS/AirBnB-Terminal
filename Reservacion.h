@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <cstring> // Añadido para strcpy
+#include "Alojamiento.h"
 using namespace std;
 class Alojamiento; // Declaración adelantada
 class Huesped; // Declaración adelantada

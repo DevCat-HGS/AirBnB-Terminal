@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "SistemaUdeASay.h"
+#include "SistemaUdeAStay.h"
 
 using namespace std;
 
@@ -17,7 +17,7 @@ void limpiarPantalla() {
     }    
 
 int main() {
-    SistemaUdeASay sistema;
+    SistemaUdeAStay sistema;
     int opcion = 0;
     bool loggedIn = false;
     
@@ -26,7 +26,7 @@ int main() {
     
     while (true) {
         if (!loggedIn) {
-            cout << "\n1. Iniciar sesión\n2. Salir\nSeleccione una opción: ";
+            cout << "\n1. Iniciar sesion\n2. Salir\nSeleccione una opcion: ";
             cin >> opcion;
             
             switch (opcion) {
@@ -40,23 +40,23 @@ int main() {
                     cout << "Gracias por usar el Sistema UdeAStay. ¡Hasta pronto!" << endl;
                     return 0;
                 default:
-                    cout << "Opción inválida. Intente nuevamente." << endl;
+                    cout << "Opcion inválida. Intente nuevamente." << endl;
             }
         } else {
            // limpiarPantalla();
             cout << "\n===== MENÚ PRINCIPAL =====";
             cout << "\n1. Registrar nuevo alojamiento";
             cout << "\n2. Registrar nuevo huésped";
-            cout << "\n3. Realizar reservación";
-            cout << "\n4. Cancelar reservación";
+            cout << "\n3. Realizar reservacion";
+            cout << "\n4. Cancelar reservacion";
             cout << "\n5. Consultar alojamientos";
             cout << "\n6. Consultar huéspedes";
             cout << "\n7. Consultar reservaciones";
             cout << "\n8. Actualizar historial";
             cout << "\n9. Guardar datos";
-            cout << "\n10. Cerrar sesión";
+            cout << "\n10. Cerrar sesion";
             cout << "\n11. Salir";
-            cout << "\nSeleccione una opción: ";
+            cout << "\nSeleccione una opcion: ";
             cin >> opcion;
             
             switch (opcion) {
@@ -89,14 +89,14 @@ int main() {
                     break;
                 case 10:
                     loggedIn = false;
-                    cout << "Sesión cerrada correctamente." << endl;
+                    cout << "Sesion cerrada correctamente." << endl;
                     break;
                 case 11:
                     sistema.guardarDatos();
                     cout << "Gracias por usar el Sistema UdeASay. ¡Hasta pronto!" << endl;
                     return 0;
                 default:
-                    cout << "Opción inválida. Intente nuevamente." << endl;
+                    cout << "Opcion inválida. Intente nuevamente." << endl;
             }
         }
     }

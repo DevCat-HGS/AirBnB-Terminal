@@ -1,0 +1,4 @@
+===== REPORTE DEL SISTEMA =====
+Memoria total utilizada: 3184 bytes
+Iteraciones totales: 10
+====================================

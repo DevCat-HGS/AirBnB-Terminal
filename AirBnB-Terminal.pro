@@ -30,4 +30,4 @@ HEADERS += \
     MonitorSistema.h \
     Nodo.h \
     Reservacion.h \
-    SistemaUdeASay.h
+    SistemaUdeAStay.h
