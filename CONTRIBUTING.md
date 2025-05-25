@@ -1,107 +1,153 @@
-# Guía de Contribución
+# Guía de Contribución - UdeAStay
 
-## Cómo Contribuir
+## Proceso de Contribución
 
-¡Gracias por tu interés en contribuir al Sistema UdeASay! Este documento proporciona las pautas y mejores prácticas para contribuir al proyecto.
+### 1. Preparación del Entorno
+1. Fork del repositorio
+2. Clonar el fork:
+   ```bash
+   git clone https://github.com/tu-usuario/UdeAStay.git
+   cd UdeAStay
+   ```
+3. Configurar el repositorio upstream:
+   ```bash
+   git remote add upstream https://github.com/original/UdeAStay.git
+   ```
 
-### Proceso de Contribución
+### 2. Desarrollo de Cambios
+1. Crear rama para la feature:
+   ```bash
+   git checkout -b feature/nombre-caracteristica
+   ```
+2. Realizar cambios siguiendo las convenciones de código
+3. Ejecutar pruebas locales
+4. Commit de cambios:
+   ```bash
+   git commit -m "feat: descripción del cambio"
+   ```
 
-1. **Fork del Repositorio**
-   - Realiza un fork del repositorio principal a tu cuenta de GitHub
-   - Clona tu fork localmente
+## Convenciones de Código
 
-2. **Configuración del Entorno**
-   - Asegúrate de tener instalado un compilador C++ compatible
-   - Configura tu IDE con las extensiones necesarias
-   - Verifica que puedes compilar y ejecutar el proyecto
+### 1. Estilo de Código
+```cpp
+// Ejemplo de clase
+class NombreClase {
+private:
+    // Variables miembro con prefijo m_
+    int m_variable;
+    
+public:
+    // Constructor explícito
+    explicit NombreClase(int valor);
+    
+    // Métodos descriptivos
+    void realizarAccion();
+    int obtenerValor() const;
+};
+```
 
-3. **Creación de Ramas**
-   - Crea una rama para tu característica o corrección
-   - Usa nombres descriptivos: `feature/nueva-caracteristica` o `fix/correccion-bug`
+### 2. Nomenclatura
+- **Clases**: PascalCase (ej: `ClaseEjemplo`)
+- **Métodos**: camelCase (ej: `realizarAccion()`)
+- **Variables**: camelCase (ej: `nombreVariable`)
+- **Constantes**: SNAKE_CASE (ej: `VALOR_MAXIMO`)
 
-4. **Desarrollo**
-   - Sigue el estilo de código existente
-   - Documenta el código nuevo
-   - Añade pruebas cuando sea posible
-   - Mantén los commits atómicos y con mensajes claros
+### 3. Documentación
+```cpp
+/**
+ * @brief Descripción breve de la función
+ * @param parametro1 Descripción del primer parámetro
+ * @param parametro2 Descripción del segundo parámetro
+ * @return Descripción del valor retornado
+ */
+int funcionEjemplo(int parametro1, string parametro2);
+```
 
-### Estándares de Código
+## Proceso de Pull Request
 
-#### Estilo de Código
-- Usa indentación de 4 espacios
-- Sigue la convención camelCase para nombres de variables y funciones
-- Usa PascalCase para nombres de clases
-- Añade comentarios explicativos cuando sea necesario
+### 1. Preparación
+- Actualizar rama con upstream:
+  ```bash
+  git fetch upstream
+  git rebase upstream/main
+  ```
+- Verificar cambios localmente
+- Actualizar documentación si es necesario
 
-#### Documentación
-- Documenta todas las funciones públicas
-- Incluye ejemplos de uso cuando sea relevante
-- Actualiza el README.md si añades nuevas características
+### 2. Creación del PR
+1. Subir cambios al fork:
+   ```bash
+   git push origin feature/nombre-caracteristica
+   ```
+2. Crear Pull Request en GitHub
+3. Completar template de PR:
+   ```markdown
+   ## Descripción
+   Breve descripción de los cambios
 
-#### Pruebas
-- Verifica que el código compila sin errores
-- Prueba las nuevas características manualmente
-- Asegúrate de que no se rompen funcionalidades existentes
+   ## Tipo de Cambio
+   - [ ] Feature
+   - [ ] Bug fix
+   - [ ] Documentación
+   - [ ] Optimización
 
-### Proceso de Pull Request
+   ## Pruebas Realizadas
+   Descripción de las pruebas
+   ```
 
-1. **Antes de Enviar**
-   - Actualiza tu rama con los últimos cambios del repositorio principal
-   - Resuelve cualquier conflicto de merge
-   - Verifica que todas las pruebas pasan
+## Estándares de Calidad
 
-2. **Envío del PR**
-   - Describe claramente los cambios realizados
-   - Menciona cualquier dependencia nueva
-   - Referencia issues relacionados
+### 1. Pruebas
+- Unitarias para nuevas funcionalidades
+- Integración para cambios en flujos existentes
+- Documentación de casos de prueba
 
-3. **Revisión**
-   - Responde a los comentarios de los revisores
-   - Realiza los cambios solicitados
-   - Mantén actualizada la conversación
+### 2. Revisión de Código
+- Legibilidad y mantenibilidad
+- Optimización y rendimiento
+- Seguridad y manejo de errores
 
-### Reportar Problemas
+## Buenas Prácticas
 
-#### Bugs
-- Usa la plantilla de reporte de bugs
-- Incluye pasos para reproducir el problema
-- Menciona tu entorno de desarrollo
-- Adjunta capturas de pantalla si es relevante
+### 1. Commits
+- Mensajes descriptivos y concisos
+- Un commit por cambio lógico
+- Seguir convención de commits semánticos:
+  ```
+  feat: nueva característica
+  fix: corrección de bug
+  docs: cambios en documentación
+  style: cambios de formato
+  refactor: refactorización de código
+  test: cambios en pruebas
+  ```
 
-#### Sugerencias
-- Describe claramente la mejora propuesta
-- Explica por qué sería útil
-- Proporciona ejemplos de uso si es posible
+### 2. Branching
+- `main`: rama principal
+- `feature/*`: nuevas características
+- `fix/*`: correcciones de bugs
+- `docs/*`: actualizaciones de documentación
 
-### Mejores Prácticas
+## Recursos Adicionales
 
-1. **Código**
-   - Mantén las funciones pequeñas y enfocadas
-   - Evita la duplicación de código
-   - Usa nombres descriptivos y significativos
-   - Comenta el código complejo
+### 1. Herramientas Recomendadas
+- IDE: Visual Studio Code, CLion
+- Linters: clang-format
+- Debugger: GDB, LLDB
 
-2. **Commits**
-   - Escribe mensajes claros y descriptivos
-   - Usa el presente en los mensajes
-   - Referencia issues cuando sea relevante
+### 2. Referencias
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 
-3. **Documentación**
-   - Mantén la documentación actualizada
-   - Usa ejemplos claros y concisos
-   - Incluye diagramas cuando sea útil
+## Soporte
 
-### Recursos Adicionales
+### 1. Canales de Comunicación
+- Issues de GitHub
+- Discusiones del proyecto
+- Canal de Discord
 
-- [Guía de Estilo C++](https://google.github.io/styleguide/cppguide.html)
-- [Buenas Prácticas de Git](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
-- [Escribiendo Buenos Commits](https://chris.beams.io/posts/git-commit/)
-
-### Contacto
-
-Si tienes dudas sobre el proceso de contribución:
-- Abre un issue con tu pregunta
-- Contacta a los mantenedores por email
-- Únete a nuestro canal de comunicación
-
-¡Gracias por contribuir al proyecto!
+### 2. Reportar Problemas
+1. Verificar si el issue ya existe
+2. Usar el template de issues
+3. Incluir pasos de reproducción
+4. Adjuntar logs relevantes

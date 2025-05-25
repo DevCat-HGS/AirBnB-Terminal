@@ -1,197 +1,165 @@
-# Guía de Pruebas
+# Guía de Pruebas - Sistema UdeAStay
 
-## Visión General
-
-Este documento describe las prácticas y procedimientos de prueba para el Sistema UdeASay. El objetivo es mantener un alto nivel de calidad y confiabilidad en el código.
-
-## Tipos de Pruebas
+## Estrategias de Prueba
 
 ### 1. Pruebas Unitarias
 
 #### Componentes a Probar
-- Clase `Alojamiento`
-  - Creación y modificación de alojamientos
-  - Validación de datos
-  - Cálculo de precios
+- **Alojamiento**
+  ```cpp
+  void testAlojamiento() {
+      Alojamiento aloj("A001", "Casa Ejemplo", "Casa", "Antioquia", "Medellín");
+      assert(aloj.verificarDisponibilidad("01/01/2024", "05/01/2024"));
+  }
+  ```
 
-- Clase `Huesped`
-  - Registro de huéspedes
-  - Actualización de puntuación
-  - Gestión de reservaciones
+- **Reservación**
+  ```cpp
+  void testReservacion() {
+      Reservacion res("R001", "01/01/2024", 5, "H001");
+      assert(res.validarTraslapes() == false);
+  }
+  ```
 
-- Clase `Anfitrion`
-  - Registro de anfitriones
-  - Gestión de alojamientos
-  - Cálculo de puntuación
-
-- Clase `Reservacion`
-  - Creación de reservas
-  - Validación de fechas
-  - Cálculo de costos
+- **Sistema de Usuarios**
+  ```cpp
+  void testAutenticacion() {
+      SistemaUdeAStay sistema;
+      assert(sistema.autenticarUsuario("12345", "huesped"));
+  }
+  ```
 
 ### 2. Pruebas de Integración
 
-#### Flujos a Probar
-- Proceso completo de reservación
-- Actualización de disponibilidad
-- Sincronización de datos
-- Generación de reportes
+#### Flujos Principales
+1. **Proceso de Reservación**
+   - Búsqueda de alojamiento
+   - Verificación de disponibilidad
+   - Creación de reserva
+   - Actualización de estado
+
+2. **Gestión de Usuarios**
+   - Registro de huésped
+   - Autenticación
+   - Actualización de perfil
 
 ### 3. Pruebas de Sistema
 
-#### Aspectos a Verificar
-- Rendimiento del sistema
-- Gestión de memoria
-- Persistencia de datos
-- Manejo de errores
+#### Casos de Prueba
 
-## Procedimientos de Prueba
+1. **Registro y Login**
+   ```
+   Escenario: Registro de nuevo huésped
+   Dado: Un usuario no registrado
+   Cuando: Ingresa sus datos correctamente
+   Entonces: Se crea una nueva cuenta
+   ```
 
-### Preparación del Entorno
-1. Limpiar archivos de datos
-2. Inicializar sistema
-3. Preparar datos de prueba
+2. **Reservaciones**
+   ```
+   Escenario: Realizar una reservación
+   Dado: Un huésped autenticado
+   Cuando: Selecciona fechas disponibles
+   Entonces: Se crea la reservación exitosamente
+   ```
 
-### Ejecución de Pruebas
-1. Ejecutar pruebas unitarias
-2. Verificar integración
-3. Realizar pruebas de sistema
-4. Documentar resultados
+### 4. Pruebas de Rendimiento
 
-## Casos de Prueba
-
-### Alojamientos
-```cpp
-// Prueba de creación de alojamiento
-void testCrearAlojamiento() {
-    Alojamiento aloj("001", "Casa Playa", "Casa", "Antioquia", "Medellín", 200000);
-    assert(aloj.getCodigo() == "001");
-    assert(aloj.getPrecioNoche() == 200000);
-}
-
-// Prueba de validación de precio
-void testValidarPrecio() {
-    Alojamiento aloj("002", "Apartamento", "Apto", "Valle", "Cali", -1000);
-    assert(aloj.validarPrecio() == false);
-}
-```
-
-### Reservaciones
-```cpp
-// Prueba de validación de fechas
-void testValidarFechas() {
-    Reservacion res("R001", "2024-01-20", 5, "H001", "Efectivo");
-    assert(res.validarFechas() == true);
-}
-
-// Prueba de cálculo de costo
-void testCalcularCosto() {
-    Reservacion res("R002", "2024-02-01", 3, "H002", "Tarjeta");
-    assert(res.calcularCosto(100000) == 300000);
-}
-```
-
-## Monitoreo y Métricas
-
-### Métricas a Seguir
-- Cobertura de código
-- Tiempo de ejecución
+#### Métricas a Evaluar
+- Tiempo de respuesta
 - Uso de memoria
-- Tasa de éxito/fallo
+- Capacidad de carga
 
-### Herramientas de Monitoreo
-- Contadores de memoria
-- Registros de tiempo
-- Logs de errores
-
-## Manejo de Errores
-
-### Tipos de Errores
-1. Validación de datos
-2. Operaciones inválidas
-3. Problemas de memoria
-4. Errores de archivo
-
-### Procedimiento de Registro
-1. Capturar error
-2. Registrar detalles
-3. Notificar si es crítico
-4. Documentar solución
-
-## Mejores Prácticas
-
-### Código de Prueba
-- Mantener pruebas actualizadas
-- Usar nombres descriptivos
-- Documentar casos de prueba
-- Mantener independencia
-
-### Datos de Prueba
-- Usar datos realistas
-- Mantener consistencia
-- Limpiar después de pruebas
-- Versionar datos de prueba
-
-## Automatización
-
-### Scripts de Prueba
-```bash
-# Ejecutar todas las pruebas
-./run_tests.sh
-
-# Ejecutar pruebas específicas
-./run_tests.sh --module alojamiento
+#### Herramientas
+```cpp
+class TestRendimiento {
+public:
+    void medirTiempoRespuesta();
+    void evaluarConsumoMemoria();
+    void probarCargaMaxima();
+};
 ```
 
-### Integración Continua
-- Ejecutar pruebas en cada commit
-- Verificar cobertura
-- Generar reportes
-- Notificar resultados
+## Plan de Pruebas
 
-## Documentación de Resultados
+### 1. Preparación
+- Configuración del entorno
+- Datos de prueba
+- Herramientas necesarias
 
-### Formato de Reporte
+### 2. Ejecución
+1. Pruebas unitarias automatizadas
+2. Pruebas de integración
+3. Pruebas de sistema
+4. Pruebas de rendimiento
+
+### 3. Documentación
+- Resultados de pruebas
+- Errores encontrados
+- Soluciones implementadas
+
+## Buenas Prácticas
+
+### 1. Código de Pruebas
+```cpp
+// Ejemplo de clase de prueba
+class PruebasAlojamiento {
+private:
+    Alojamiento* alojamiento;
+    
+public:
+    void setUp() {
+        alojamiento = new Alojamiento();
+    }
+    
+    void tearDown() {
+        delete alojamiento;
+    }
+    
+    void ejecutarPruebas() {
+        testCreacion();
+        testDisponibilidad();
+        testReservacion();
+    }
+};
 ```
-Fecha: YYYY-MM-DD
-Versión: X.Y.Z
-Pruebas Ejecutadas: XX
-Éxitos: XX
-Fallos: XX
-Cobertura: XX%
-Tiempo Total: XXs
+
+### 2. Automatización
+- Scripts de prueba
+- Integración continua
+- Reportes automáticos
+
+### 3. Mantenimiento
+- Actualización de casos de prueba
+- Revisión periódica
+- Mejora continua
+
+## Gestión de Errores
+
+### 1. Registro de Errores
+```cpp
+class RegistroErrores {
+public:
+    void logError(const string& tipo, const string& descripcion);
+    void generarReporte();
+    void notificarEquipo();
+};
 ```
 
-### Registro de Problemas
-- Descripción del error
-- Pasos de reproducción
-- Solución aplicada
-- Verificación
+### 2. Proceso de Corrección
+1. Identificación del error
+2. Análisis de causa
+3. Implementación de solución
+4. Verificación
 
-## Mantenimiento
+## Métricas de Calidad
 
-### Actualización de Pruebas
-- Revisar periódicamente
-- Actualizar casos obsoletos
-- Agregar nuevos casos
-- Optimizar rendimiento
+### 1. Cobertura de Código
+- Porcentaje de código probado
+- Funciones críticas cubiertas
+- Casos límite evaluados
 
-### Revisión de Código
-- Verificar estándares
-- Buscar duplicación
-- Optimizar recursos
-- Documentar cambios
-
-## Recursos
-
-### Herramientas
-- Framework de pruebas
-- Analizador de cobertura
-- Monitor de memoria
-- Sistema de logs
-
-### Documentación
-- Guías de prueba
-- Ejemplos de código
-- Plantillas de reporte
-- Referencias técnicas
+### 2. Efectividad
+- Tasa de detección de errores
+- Tiempo de resolución
+- Satisfacción del usuario
