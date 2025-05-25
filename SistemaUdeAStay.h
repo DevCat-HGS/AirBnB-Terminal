@@ -375,17 +375,57 @@ public:
     // Métodos según el diagrama UML
     bool login() {
         string usuario, password;
-        cout << "Usuario: ";
-        cin >> usuario;
-        cout << "Contraseña: ";
-        cin >> password;
-        
-        // Verificar credenciales (simplificado para el ejemplo)
-        if (usuario == "admin" && password == "admin123") {
-            cout << "Inicio de sesión exitoso." << endl;
-            return true;
+        cout << "===== INICIO DE SESIÓN =====" << endl;
+        cout << "1. Administrador\n2. Huésped\nSeleccione tipo de usuario: ";
+        int tipoUsuario;
+        cin >> tipoUsuario;
+
+        if (tipoUsuario == 1) {
+            cout << "Usuario: ";
+            cin >> usuario;
+            cout << "Contraseña: ";
+            cin >> password;
+            
+            if (usuario == "admin" && password == "admin123") {
+                cout << "Inicio de sesión exitoso como administrador." << endl;
+                return true;
+            } else {
+                cout << "Credenciales incorrectas." << endl;
+                return false;
+            }
+        } else if (tipoUsuario == 2) {
+            string documento;
+            cout << "Ingrese su número de documento: ";
+            cin >> documento;
+
+            Huesped* huesped = nullptr;
+            Nodo<Huesped*>* actual = huespedes.getCabeza();
+            while (actual != nullptr) {
+                monitor.registrarIteracion();
+                if (actual->getDato()->getDocumento() == documento) {
+                    huesped = actual->getDato();
+                    break;
+                }
+                actual = actual->getSiguiente();
+            }
+
+            if (huesped != nullptr) {
+                cout << "Bienvenido " << huesped->getNombre() << "!" << endl;
+                return true;
+            } else {
+                cout << "Huésped no encontrado. ¿Desea registrarse? (1: Sí, 2: No): ";
+                int opcion;
+                cin >> opcion;
+
+                if (opcion == 1) {
+                    registrarHuesped();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         } else {
-            cout << "Credenciales incorrectas." << endl;
+            cout << "Opción inválida." << endl;
             return false;
         }
     }
