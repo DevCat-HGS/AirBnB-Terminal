@@ -474,6 +474,57 @@ public:
             
             if (usuario == "admin" && password == "admin123") {
                 cout << "Inicio de sesión exitoso como administrador." << endl;
+                int opcion;
+                do {
+                    cout << "\n===== MENÚ ADMINISTRADOR =====" << endl;
+                    cout << "1. Registrar nuevo alojamiento" << endl;
+                    cout << "2. Registrar nuevo huésped" << endl;
+                    cout << "3. Realizar reservacion" << endl;
+                    cout << "4. Cancelar reservacion" << endl;
+                    cout << "5. Consultar alojamientos" << endl;
+                    cout << "6. Consultar huéspedes" << endl;
+                    cout << "7. Consultar reservaciones" << endl;
+                    cout << "8. Actualizar historial" << endl;
+                    cout << "9. Guardar datos" << endl;
+                    cout << "10. Salir" << endl;
+                    cout << "Seleccione una opcion: ";
+                    cin >> opcion;
+
+                    switch (opcion) {
+                        case 1:
+                            registrarAlojamiento();
+                            break;
+                        case 2:
+                            registrarHuesped();
+                            break;
+                        case 3:
+                            realizarReservacion();
+                            break;
+                        case 4:
+                            cancelarReserva();
+                            break;
+                        case 5:
+                            consultarAlojamientos();
+                            break;
+                        case 6:
+                            consultarHuespedes();
+                            break;
+                        case 7:
+                            consultarReservaciones();
+                            break;
+                        case 8:
+                            actualizarHistorico();
+                            break;
+                        case 9:
+                            guardarDatos();
+                            break;
+                        case 10:
+                            cout << "Sesión de administrador cerrada." << endl;
+                            break;
+                        default:
+                            cout << "Opción inválida." << endl;
+                    }
+                } while (opcion != 10);
                 return true;
             } else {
                 cout << "Credenciales incorrectas." << endl;
@@ -484,16 +535,11 @@ public:
             cout << "Ingrese su número de documento: ";
             cin >> documento;
 
-            Huesped* huesped = nullptr;
-            Nodo<Huesped*>* actual = huespedes.getCabeza();
-            while (actual != nullptr) {
-                monitor.registrarIteracion();
-                if (actual->getDato()->getDocumento() == documento) {
-                    huesped = actual->getDato();
-                    break;
-                }
-                actual = actual->getSiguiente();
-            }
+            // Crear un huésped temporal para la búsqueda
+            Huesped* huespedBusqueda = new Huesped();
+            huespedBusqueda->setDocumento(documento);
+            Huesped* huesped = huespedes.buscar(huespedBusqueda);
+            delete huespedBusqueda; // Liberar memoria del objeto temporal
 
             if (huesped != nullptr) {
                 cout << "Bienvenido " << huesped->getNombre() << "!" << endl;

@@ -1,5 +1,10 @@
+A101|Casa Bella Vista|Casa|Antioquia|Medellín|Calle 10 #34-56|150000|
+AMENIDADES:WiFi,Piscina,Cocina equipada,Aire acondicionado,WiFi,Gimnasio,Lavadora,Smart TV,Chimenea,Jacuzzi,Vista al lago,Terraza,WiFi,Cocina moderna,Área de trabajo,Netflix,Piscina climatizada,Cancha de tenis,Jardín,Sala de juegos,WiFi,Piscina,Cocina equipada,Aire acondicionado,WiFi,Gimnasio,Lavadora,Smart TV,Chimenea,Jacuzzi,Vista al lago,Terraza,WiFi,Cocina moderna,Área de trabajo,Netflix,Piscina climatizada,Cancha de tenis,Jardín,Sala de juegos,
+B202|Apartamento Moderno|Apartamento|Antioquia|Envigado|Carrera 25 #45-67|120000|
+C303|Cabaña El Bosque|Cabaña|Antioquia|Guatapé|Vereda La Piedra #123|180000|
+D404|Loft Urbano|Loft|Antioquia|Sabaneta|Calle 45 #12-34|95000|
+E505|Villa Paraíso|Villa|Antioquia|Rionegro|Km 2 Vía Aeropuerto|250000|
 A101|Casa Bella Vista|Casa|Antioquia|Medellín|Calle 10 #34-56|150000|1045678901
-AMENIDADES:WiFi,Piscina,Cocina equipada,Aire acondicionado,WiFi,Gimnasio,Lavadora,Smart TV,Chimenea,Jacuzzi,Vista al lago,Terraza,WiFi,Cocina moderna,Área de trabajo,Netflix,Piscina climatizada,Cancha de tenis,Jardín,Sala de juegos,
 B202|Apartamento Moderno|Apartamento|Antioquia|Envigado|Carrera 25 #45-67|120000|2034567890
 C303|Cabaña El Bosque|Cabaña|Antioquia|Guatapé|Vereda La Piedra #123|180000|3023456789
 D404|Loft Urbano|Loft|Antioquia|Sabaneta|Calle 45 #12-34|95000|4012345678
