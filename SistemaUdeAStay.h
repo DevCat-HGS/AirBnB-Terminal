@@ -5,6 +5,9 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <sstream>
+#include <iomanip>
+#include <chrono>
 #include <cstring>
 #include "Lista.h"
 #include "Alojamiento.h"
@@ -153,6 +156,112 @@ private:
         }
     }
 
+    void cancelarReservacionHuesped(Huesped* huesped) {
+        string codigoReserva;
+        cout << "\n===== CANCELAR RESERVACIÓN =====" << endl;
+        cout << "Ingrese el código de la reserva: ";
+        cin >> codigoReserva;
+
+        Nodo<Reservacion*>* actual = huesped->getReservacionesActivas().getCabeza();
+        while (actual != nullptr) {
+            Reservacion* reserva = actual->getDato();
+            if (reserva->getCodigo() == codigoReserva) {
+                // Verificar que no haya pasado la fecha de inicio
+                time_t now = time(nullptr);
+                struct tm fecha_inicio = {};
+                std::istringstream ss(reserva->getFechaInicio());
+                ss >> std::get_time(&fecha_inicio, "%d/%m/%Y");
+                time_t fecha_reserva = mktime(&fecha_inicio);
+
+                if (now < fecha_reserva) {
+                    // Eliminar la reserva de la lista de reservas activas del huésped
+                    huesped->getReservacionesActivas().eliminar(reserva);
+                    // Eliminar la reserva de la lista de fechas reservadas del alojamiento
+                    reserva->getAlojamiento()->getFechasReservadas().eliminar(reserva);
+                    // Eliminar la reserva de la lista general de reservaciones
+                    reservaciones.eliminar(reserva);
+                    cout << "Reservación cancelada exitosamente." << endl;
+                    return;
+                } else {
+                    cout << "No se puede cancelar la reserva porque la fecha de inicio ya pasó." << endl;
+                    return;
+                }
+            }
+            actual = actual->getSiguiente();
+        }
+        cout << "No se encontró una reserva con ese código." << endl;
+    }
+
+    void verReservasActivas(Huesped* huesped) {
+        cout << "\n===== RESERVAS ACTIVAS =====" << endl;
+        Nodo<Reservacion*>* actual = huesped->getReservacionesActivas().getCabeza();
+        if (actual == nullptr) {
+            cout << "No tiene reservas activas." << endl;
+            return;
+        }
+
+        while (actual != nullptr) {
+            Reservacion* reserva = actual->getDato();
+            cout << "\nCódigo de reserva: " << reserva->getCodigo() << endl;
+            cout << "Alojamiento: " << reserva->getAlojamiento()->getNombre() << endl;
+            cout << "Fecha de inicio: " << reserva->getFechaInicio() << endl;
+            cout << "Duración: " << reserva->getDuracion() << " días" << endl;
+            cout << "Monto: $" << reserva->getMonto() << endl;
+            actual = actual->getSiguiente();
+        }
+    }
+
+    void verHistorialReservas(Huesped* huesped) {
+        cout << "\n===== HISTORIAL DE RESERVAS =====" << endl;
+        bool tieneHistorial = false;
+
+        // Mostrar reservas activas
+        cout << "\nReservas Activas:" << endl;
+        Nodo<Reservacion*>* actual = huesped->getReservacionesActivas().getCabeza();
+        while (actual != nullptr) {
+            tieneHistorial = true;
+            Reservacion* reserva = actual->getDato();
+            cout << "\nCódigo de reserva: " << reserva->getCodigo() << endl;
+            cout << "Alojamiento: " << reserva->getAlojamiento()->getNombre() << endl;
+            cout << "Fecha de inicio: " << reserva->getFechaInicio() << endl;
+            cout << "Duración: " << reserva->getDuracion() << " días" << endl;
+            cout << "Monto: $" << reserva->getMonto() << endl;
+            cout << "Estado: Activa" << endl;
+            actual = actual->getSiguiente();
+        }
+
+        // Mostrar reservas pasadas
+        cout << "\nReservas Pasadas:" << endl;
+        actual = reservaciones.getCabeza();
+        while (actual != nullptr) {
+            Reservacion* reserva = actual->getDato();
+            if (reserva->getHuesped() == huesped) {
+                // Verificar si la reserva ya pasó
+                time_t now = time(nullptr);
+                struct tm fecha_inicio = {};
+                std::istringstream ss(reserva->getFechaInicio());
+                ss >> std::get_time(&fecha_inicio, "%d/%m/%Y");
+                time_t fecha_reserva = mktime(&fecha_inicio);
+                fecha_reserva += (reserva->getDuracion() * 24 * 60 * 60); // Añadir la duración en segundos
+
+                if (now > fecha_reserva) {
+                    tieneHistorial = true;
+                    cout << "\nCódigo de reserva: " << reserva->getCodigo() << endl;
+                    cout << "Alojamiento: " << reserva->getAlojamiento()->getNombre() << endl;
+                    cout << "Fecha de inicio: " << reserva->getFechaInicio() << endl;
+                    cout << "Duración: " << reserva->getDuracion() << " días" << endl;
+                    cout << "Monto: $" << reserva->getMonto() << endl;
+                    cout << "Estado: Finalizada" << endl;
+                }
+            }
+            actual = actual->getSiguiente();
+        }
+
+        if (!tieneHistorial) {
+            cout << "No tiene historial de reservas." << endl;
+        }
+    }
+
     void realizarReservacionHuesped(Huesped* huesped) {
         string codigoAlojamiento;
         string fechaInicio;
@@ -176,6 +285,17 @@ private:
         cin >> fechaInicio;
         cout << "Ingrese la duración (días): ";
         cin >> duracion;
+
+        // Verificar si el huésped ya tiene reservas en las mismas fechas
+        Nodo<Reservacion*>* actual = huesped->getReservacionesActivas().getCabeza();
+        while (actual != nullptr) {
+            Reservacion* reserva = actual->getDato();
+            if (reserva->getFechaInicio() == fechaInicio) {
+                cout << "Ya tiene una reserva para la fecha seleccionada." << endl;
+                return;
+            }
+            actual = actual->getSiguiente();
+        }
 
         if (!alojamiento->verificarDisponibilidad(fechaInicio, "")) {
             cout << "El alojamiento no está disponible para las fechas seleccionadas." << endl;
@@ -548,6 +668,10 @@ public:
                     cout << "\n===== MENÚ HUÉSPED =====" << endl;
                     cout << "1. Consultar alojamientos disponibles" << endl;
                     cout << "2. Realizar reservación" << endl;
+                    cout << "3. Cancelar reservación" << endl;
+                    cout << "4. Ver reservas activas" << endl;
+                    cout << "5. Ver historial de reservas" << endl;
+                    cout << "6. Salir" << endl;
                     cout << "3. Salir" << endl;
                     cout << "Seleccione una opción: ";
                     cin >> opcion;
@@ -560,12 +684,21 @@ public:
                             realizarReservacionHuesped(huesped);
                             break;
                         case 3:
+                            cancelarReservacionHuesped(huesped);
+                            break;
+                        case 4:
+                            verReservasActivas(huesped);
+                            break;
+                        case 5:
+                            verHistorialReservas(huesped);
+                            break;
+                        case 6:
                             cout << "Gracias por usar nuestro sistema." << endl;
                             break;
                         default:
                             cout << "Opción inválida." << endl;
                     }
-                } while (opcion != 3);
+                } while (opcion != 6);
                 return true;
             } else {
                 cout << "Huésped no encontrado. ¿Desea registrarse? (1: Sí, 2: No): ";
