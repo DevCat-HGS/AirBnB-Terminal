@@ -452,7 +452,11 @@ private:
     
 public:
     // Constructor
-    SistemaUdeAStay() {}
+    SistemaUdeAStay() {
+        cargarHuespedes();
+        cargarAlojamientos();
+        cargarReservaciones();
+    }
     
     // Métodos según el diagrama UML
     bool login() {
