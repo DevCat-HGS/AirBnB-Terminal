@@ -129,6 +129,88 @@ private:
         
         archivo.close();
     }
+
+    void consultarAlojamientosDisponibles() {
+        cout << "\n===== ALOJAMIENTOS DISPONIBLES =====" << endl;
+        Nodo<Alojamiento*>* actual = alojamientos.getCabeza();
+        while (actual != nullptr) {
+            monitor.registrarIteracion();
+            Alojamiento* alojamiento = actual->getDato();
+            cout << "\nCódigo: " << alojamiento->getCodigo() << endl;
+            cout << "Nombre: " << alojamiento->getNombre() << endl;
+            cout << "Tipo: " << alojamiento->getTipo() << endl;
+            cout << "Ubicación: " << alojamiento->getMunicipio() << ", " << alojamiento->getDepartamento() << endl;
+            cout << "Precio por noche: $" << alojamiento->getPrecioNoche() << endl;
+            cout << "Amenidades: ";
+            Nodo<string>* amenidad = alojamiento->getAmenidades().getCabeza();
+            while (amenidad != nullptr) {
+                cout << amenidad->getDato();
+                if (amenidad->getSiguiente() != nullptr) cout << ", ";
+                amenidad = amenidad->getSiguiente();
+            }
+            cout << endl;
+            actual = actual->getSiguiente();
+        }
+    }
+
+    void realizarReservacionHuesped(Huesped* huesped) {
+        string codigoAlojamiento;
+        string fechaInicio;
+        int duracion;
+        
+        cout << "\n===== REALIZAR RESERVACIÓN =====" << endl;
+        cout << "Ingrese el código del alojamiento: ";
+        cin >> codigoAlojamiento;
+
+        Alojamiento* alojamientoBusqueda = new Alojamiento();
+        alojamientoBusqueda->setCodigo(codigoAlojamiento);
+        Alojamiento* alojamiento = alojamientos.buscar(alojamientoBusqueda);
+        delete alojamientoBusqueda;
+
+        if (alojamiento == nullptr) {
+            cout << "No se encontró el alojamiento con ese código." << endl;
+            return;
+        }
+
+        cout << "Ingrese la fecha de inicio (DD/MM/AAAA): ";
+        cin >> fechaInicio;
+        cout << "Ingrese la duración (días): ";
+        cin >> duracion;
+
+        if (!alojamiento->verificarDisponibilidad(fechaInicio, "")) {
+            cout << "El alojamiento no está disponible para las fechas seleccionadas." << endl;
+            return;
+        }
+
+        string metodoPago;
+        cout << "Método de pago: ";
+        cin.ignore();
+        getline(cin, metodoPago);
+
+        float monto = alojamiento->getPrecioNoche() * duracion;
+        string codigoReserva = "RES" + to_string(time(nullptr));
+
+        Reservacion* nuevaReservacion = new Reservacion(
+            codigoReserva,
+            fechaInicio,
+            duracion,
+            huesped->getDocumento(),
+            metodoPago,
+            "Hoy",
+            monto
+        );
+        monitor.sumarMemoria(sizeof(Reservacion));
+        nuevaReservacion->setAlojamiento(alojamiento);
+        nuevaReservacion->setHuesped(huesped);
+
+        reservaciones.agregar(nuevaReservacion);
+        alojamiento->agregarReservacion(nuevaReservacion);
+        huesped->getReservacionesActivas().agregar(nuevaReservacion);
+
+        cout << "Reservación realizada exitosamente." << endl;
+        cout << "Código de reserva: " << codigoReserva << endl;
+        cout << "Valor total: $" << monto << endl;
+    }
     
     void cargarAlojamientos() {
         ifstream archivo("alojamientos.txt");
@@ -411,6 +493,29 @@ public:
 
             if (huesped != nullptr) {
                 cout << "Bienvenido " << huesped->getNombre() << "!" << endl;
+                int opcion;
+                do {
+                    cout << "\n===== MENÚ HUÉSPED =====" << endl;
+                    cout << "1. Consultar alojamientos disponibles" << endl;
+                    cout << "2. Realizar reservación" << endl;
+                    cout << "3. Salir" << endl;
+                    cout << "Seleccione una opción: ";
+                    cin >> opcion;
+
+                    switch(opcion) {
+                        case 1:
+                            consultarAlojamientosDisponibles();
+                            break;
+                        case 2:
+                            realizarReservacionHuesped(huesped);
+                            break;
+                        case 3:
+                            cout << "Gracias por usar nuestro sistema." << endl;
+                            break;
+                        default:
+                            cout << "Opción inválida." << endl;
+                    }
+                } while (opcion != 3);
                 return true;
             } else {
                 cout << "Huésped no encontrado. ¿Desea registrarse? (1: Sí, 2: No): ";
