@@ -7,21 +7,11 @@
 
 using namespace std;
 
-
-void limpiarPantalla() {
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
-    }    
-
 int main() {
     SistemaUdeAStay sistema;
     int opcion = 0;
     bool loggedIn = false;
     
-  //  limpiarPantalla();
     cout << "===== Bienvenido al Sistema UdeAStay ====="  << endl;
     
     while (true) {
