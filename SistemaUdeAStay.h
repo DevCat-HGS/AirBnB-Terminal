@@ -134,25 +134,44 @@ private:
     }
 
     void consultarAlojamientosDisponibles() {
-        cout << "\n===== ALOJAMIENTOS DISPONIBLES =====" << endl;
+        string departamento, municipio;
+        cout << "\n===== CONSULTA DE ALOJAMIENTOS DISPONIBLES =====" << endl;
+        cout << "Ingrese el departamento deseado: ";
+        cin.ignore();
+        getline(cin, departamento);
+        cout << "Ingrese el municipio deseado: ";
+        getline(cin, municipio);
+
+        cout << "\n===== ALOJAMIENTOS DISPONIBLES EN " << municipio << ", " << departamento << " =====" << endl;
+        bool encontrado = false;
         Nodo<Alojamiento*>* actual = alojamientos.getCabeza();
+        
         while (actual != nullptr) {
             monitor.registrarIteracion();
             Alojamiento* alojamiento = actual->getDato();
-            cout << "\nCódigo: " << alojamiento->getCodigo() << endl;
-            cout << "Nombre: " << alojamiento->getNombre() << endl;
-            cout << "Tipo: " << alojamiento->getTipo() << endl;
-            cout << "Ubicación: " << alojamiento->getMunicipio() << ", " << alojamiento->getDepartamento() << endl;
-            cout << "Precio por noche: $" << alojamiento->getPrecioNoche() << endl;
-            cout << "Amenidades: ";
-            Nodo<string>* amenidad = alojamiento->getAmenidades().getCabeza();
-            while (amenidad != nullptr) {
-                cout << amenidad->getDato();
-                if (amenidad->getSiguiente() != nullptr) cout << ", ";
-                amenidad = amenidad->getSiguiente();
+            
+            if (alojamiento->getDepartamento() == departamento && 
+                alojamiento->getMunicipio() == municipio) {
+                encontrado = true;
+                cout << "\nCódigo: " << alojamiento->getCodigo() << endl;
+                cout << "Nombre: " << alojamiento->getNombre() << endl;
+                cout << "Tipo: " << alojamiento->getTipo() << endl;
+                cout << "Dirección: " << alojamiento->getDireccion() << endl;
+                cout << "Precio por noche: $" << alojamiento->getPrecioNoche() << endl;
+                cout << "Amenidades: ";
+                Nodo<string>* amenidad = alojamiento->getAmenidades().getCabeza();
+                while (amenidad != nullptr) {
+                    cout << amenidad->getDato();
+                    if (amenidad->getSiguiente() != nullptr) cout << ", ";
+                    amenidad = amenidad->getSiguiente();
+                }
+                cout << endl;
             }
-            cout << endl;
             actual = actual->getSiguiente();
+        }
+        
+        if (!encontrado) {
+            cout << "No se encontraron alojamientos disponibles en la ubicación especificada." << endl;
         }
     }
 
@@ -672,7 +691,6 @@ public:
                     cout << "4. Ver reservas activas" << endl;
                     cout << "5. Ver historial de reservas" << endl;
                     cout << "6. Salir" << endl;
-                    cout << "3. Salir" << endl;
                     cout << "Seleccione una opción: ";
                     cin >> opcion;
 
