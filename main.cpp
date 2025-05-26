@@ -16,8 +16,20 @@ int main() {
     
     while (true) {
         if (!loggedIn) {
-            cout << "\n1. Iniciar sesion\n2. Salir\nSeleccione una opcion: ";
-            cin >> opcion;
+            do {
+                cout << "\n1. Iniciar sesion\n2. Salir\nSeleccione una opcion: ";
+                if (!(cin >> opcion)) {
+                    cout << "Error: Debe ingresar un número." << endl;
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    opcion = 0;
+                    continue;
+                }
+                cin.ignore(10000, '\n');
+                if (opcion != 1 && opcion != 2) {
+                    cout << "Error: Opción inválida. Debe ser 1 o 2." << endl;
+                }
+            } while (opcion != 1 && opcion != 2);
             
             switch (opcion) {
                 case 1:
