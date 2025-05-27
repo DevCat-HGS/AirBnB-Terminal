@@ -465,6 +465,36 @@ private:
     }
     
 
+    void agregarObservacionReservacion(Huesped* huesped) {
+        cout << "\n===== AGREGAR OBSERVACIÓN A RESERVACIÓN =====" << endl;
+        string codigoReserva;
+        cout << "Ingrese el código de la reservación: ";
+        cin >> codigoReserva;
+
+        // Buscar la reservación
+        Nodo<Reservacion*>* actual = huesped->getReservacionesActivas().getCabeza();
+        bool encontrada = false;
+
+        while (actual != nullptr) {
+            Reservacion* reserva = actual->getDato();
+            if (reserva->getCodigo() == codigoReserva) {
+                encontrada = true;
+                cin.ignore();
+                cout << "Ingrese su observación (máximo 1000 caracteres): ";
+                char observacion[1000];
+                cin.getline(observacion, 1000);
+                reserva->setObservaciones(observacion);
+                cout << "Observación agregada exitosamente." << endl;
+                break;
+            }
+            actual = actual->getSiguiente();
+        }
+
+        if (!encontrada) {
+            cout << "No se encontró una reservación activa con ese código." << endl;
+        }
+    }
+
     void verHistorialReservas(Huesped* huesped) {
         cout << "\n===== HISTORIAL DE RESERVAS =====" << endl;
         bool tieneHistorial = false;
@@ -926,7 +956,8 @@ public:
                     cout << "3. Cancelar reservación" << endl;
                     cout << "4. Ver reservas activas" << endl;
                     cout << "5. Ver historial de reservas" << endl;
-                    cout << "6. Salir" << endl;
+                    cout << "6. Agregar observación a reservación" << endl;
+                    cout << "7. Salir" << endl;
                     cout << "Seleccione una opción: ";
                     cin >> opcion;
 
@@ -947,12 +978,15 @@ public:
                             verHistorialReservas(huesped);
                             break;
                         case 6:
+                            agregarObservacionReservacion(huesped);
+                            break;
+                        case 7:
                             cout << "Gracias por usar nuestro sistema." << endl;
                             break;
                         default:
                             cout << "Opción inválida." << endl;
                     }
-                } while (opcion != 6);
+                } while (opcion != 7);
                 return true;
             } else {
                 cout << "Huésped no encontrado. ¿Desea registrarse? (1: Sí, 2: No): ";
