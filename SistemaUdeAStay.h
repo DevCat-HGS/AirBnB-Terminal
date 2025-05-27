@@ -463,6 +463,7 @@ private:
             actual = actual->getSiguiente();
         }
     }
+    
 
     void verHistorialReservas(Huesped* huesped) {
         cout << "\n===== HISTORIAL DE RESERVAS =====" << endl;
@@ -827,6 +828,7 @@ public:
     // Constructor
     SistemaUdeAStay() {
         cargarHuespedes();
+        cargarAnfitriones();
         cargarAlojamientos();
         cargarReservaciones();
     }
