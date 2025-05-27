@@ -23,6 +23,193 @@ private:
     Lista<Huesped*> huespedes;
     Lista<Reservacion*> reservaciones;
     MonitorSistema monitor;
+
+    void verMisAlojamientos(Anfitrion* anfitrion) {
+        cout << "\n===== MIS ALOJAMIENTOS =====" << endl;
+        Lista<Alojamiento*>& alojamientosAnfitrion = anfitrion->getAlojamientos();
+        if (alojamientosAnfitrion.getCabeza() == nullptr) {
+            cout << "No tiene alojamientos registrados." << endl;
+            return;
+        }
+
+        Nodo<Alojamiento*>* actual = alojamientosAnfitrion.getCabeza();
+        while (actual != nullptr) {
+            Alojamiento* alojamiento = actual->getDato();
+            alojamiento->mostrarInfo();
+            cout << "-----------------------------------" << endl;
+            actual = actual->getSiguiente();
+        }
+    }
+
+    void registrarAlojamientoAnfitrion(Anfitrion* anfitrion) {
+        string codigo, nombre, tipo, departamento, municipio, direccion;
+        float precioNoche;
+        
+        cout << "\n===== REGISTRO DE NUEVO ALOJAMIENTO =====" << endl;
+        cout << "Código: ";
+        cin >> codigo;
+        
+        // Verificar si ya existe un alojamiento con ese código
+        Alojamiento* alojamientoBusqueda = new Alojamiento();
+        alojamientoBusqueda->setCodigo(codigo);
+        if (alojamientos.buscar(alojamientoBusqueda) != nullptr) {
+            delete alojamientoBusqueda;
+            cout << "Ya existe un alojamiento con ese código." << endl;
+            return;
+        }
+        delete alojamientoBusqueda;
+        
+        cin.ignore();
+        cout << "Nombre: ";
+        getline(cin, nombre);
+        
+        cout << "Tipo (casa, apartamento, habitación): ";
+        getline(cin, tipo);
+        
+        cout << "Departamento: ";
+        getline(cin, departamento);
+        
+        cout << "Municipio: ";
+        getline(cin, municipio);
+        
+        cout << "Dirección: ";
+        getline(cin, direccion);
+        
+        cout << "Precio por noche: ";
+        cin >> precioNoche;
+
+        // Crear y configurar el nuevo alojamiento
+        Alojamiento* nuevoAlojamiento = new Alojamiento(codigo, nombre, tipo, departamento, municipio, direccion, precioNoche, anfitrion);
+        
+        // Agregar amenidades
+        cout << "\nIngrese las amenidades (escriba 'fin' para terminar):\n";
+        string amenidad;
+        cin.ignore();
+        while (true) {
+            cout << "Amenidad: ";
+            getline(cin, amenidad);
+            if (amenidad == "fin") break;
+            nuevoAlojamiento->getAmenidades().agregar(amenidad);
+        }
+        
+        // Agregar el alojamiento a las listas
+        alojamientos.agregar(nuevoAlojamiento);
+        anfitrion->getAlojamientos().agregar(nuevoAlojamiento);
+        cout << "\nAlojamiento registrado exitosamente." << endl;
+    }
+
+    void verReservacionesAlojamientos(Anfitrion* anfitrion) {
+        cout << "\n===== RESERVACIONES DE MIS ALOJAMIENTOS =====" << endl;
+        bool tieneReservaciones = false;
+        
+        Lista<Alojamiento*>& alojamientosAnfitrion = anfitrion->getAlojamientos();
+        Nodo<Alojamiento*>* actualAloj = alojamientosAnfitrion.getCabeza();
+        
+        while (actualAloj != nullptr) {
+            Alojamiento* alojamiento = actualAloj->getDato();
+            Lista<Reservacion*>& reservasAlojamiento = alojamiento->getFechasReservadas();
+            
+            if (reservasAlojamiento.getCabeza() != nullptr) {
+                tieneReservaciones = true;
+                cout << "\nAlojamiento: " << alojamiento->getNombre() << endl;
+                cout << "Código: " << alojamiento->getCodigo() << endl;
+                cout << "Reservaciones:" << endl;
+                
+                Nodo<Reservacion*>* actualRes = reservasAlojamiento.getCabeza();
+                while (actualRes != nullptr) {
+                    Reservacion* reserva = actualRes->getDato();
+                    cout << "-----------------------------------" << endl;
+                    cout << "Código de reserva: " << reserva->getCodigo() << endl;
+                    cout << "Fecha de inicio: " << reserva->getFechaInicio() << endl;
+                    cout << "Duración: " << reserva->getDuracion() << " días" << endl;
+                    cout << "Huésped: " << reserva->getHuesped()->getNombre() << endl;
+                    cout << "Monto: $" << reserva->getMonto() << endl;
+                    actualRes = actualRes->getSiguiente();
+                }
+            }
+            actualAloj = actualAloj->getSiguiente();
+        }
+        
+        if (!tieneReservaciones) {
+            cout << "No hay reservaciones para sus alojamientos." << endl;
+        }
+    }
+
+    void modificarAlojamiento(Anfitrion* anfitrion) {
+        string codigo;
+        cout << "\n===== MODIFICAR ALOJAMIENTO =====" << endl;
+        cout << "Ingrese el código del alojamiento a modificar: ";
+        cin >> codigo;
+
+        // Buscar el alojamiento
+        Alojamiento* alojamientoBusqueda = new Alojamiento();
+        alojamientoBusqueda->setCodigo(codigo);
+        Alojamiento* alojamiento = alojamientos.buscar(alojamientoBusqueda);
+        delete alojamientoBusqueda;
+
+        if (alojamiento == nullptr || alojamiento->getAnfitrion() != anfitrion) {
+            cout << "Alojamiento no encontrado o no le pertenece." << endl;
+            return;
+        }
+
+        int opcion;
+        do {
+            cout << "\n1. Modificar nombre" << endl;
+            cout << "2. Modificar tipo" << endl;
+            cout << "3. Modificar ubicación" << endl;
+            cout << "4. Modificar precio" << endl;
+            cout << "5. Agregar amenidad" << endl;
+            cout << "6. Volver al menú anterior" << endl;
+            cout << "Seleccione una opción: ";
+            cin >> opcion;
+            cin.ignore();
+
+            string nuevoValor;
+            switch(opcion) {
+                case 1:
+                    cout << "Nuevo nombre: ";
+                    getline(cin, nuevoValor);
+                    alojamiento->setNombre(nuevoValor);
+                    break;
+                case 2:
+                    cout << "Nuevo tipo: ";
+                    getline(cin, nuevoValor);
+                    alojamiento->setTipo(nuevoValor);
+                    break;
+                case 3:
+                    cout << "Nuevo departamento: ";
+                    getline(cin, nuevoValor);
+                    alojamiento->setDepartamento(nuevoValor);
+                    cout << "Nuevo municipio: ";
+                    getline(cin, nuevoValor);
+                    alojamiento->setMunicipio(nuevoValor);
+                    cout << "Nueva dirección: ";
+                    getline(cin, nuevoValor);
+                    alojamiento->setDireccion(nuevoValor);
+                    break;
+                case 4:
+                    float nuevoPrecio;
+                    cout << "Nuevo precio por noche: ";
+                    cin >> nuevoPrecio;
+                    alojamiento->setPrecioNoche(nuevoPrecio);
+                    break;
+                case 5:
+                    cout << "Nueva amenidad: ";
+                    getline(cin, nuevoValor);
+                    alojamiento->getAmenidades().agregar(nuevoValor);
+                    break;
+                case 6:
+                    cout << "Volviendo al menú anterior..." << endl;
+                    break;
+                default:
+                    cout << "Opción inválida." << endl;
+            }
+
+            if (opcion >= 1 && opcion <= 5) {
+                cout << "Modificación realizada exitosamente." << endl;
+            }
+        } while (opcion != 6);
+    }
     
     // Métodos privados para manejo de archivos
     void guardarAlojamientos() {
@@ -601,7 +788,7 @@ public:
     bool login() {
         string usuario, password;
         cout << "===== INICIO DE SESIÓN =====" << endl;
-        cout << "1. Administrador\n2. Huésped\nSeleccione tipo de usuario: ";
+        cout << "1. Administrador\n2. Huésped\n3. Anfitrión\nSeleccione tipo de usuario: ";
         int tipoUsuario;
         cin >> tipoUsuario;
 
@@ -729,6 +916,59 @@ public:
                 } else {
                     return false;
                 }
+            }
+        } else if (tipoUsuario == 3) {
+            string documento;
+            cout << "Ingrese su número de documento: ";
+            cin >> documento;
+
+            // Buscar anfitrión
+            Anfitrion* anfitrionBusqueda = new Anfitrion();
+            anfitrionBusqueda->setDocumento(documento);
+            Anfitrion* anfitrion = anfitriones.buscar(anfitrionBusqueda);
+            delete anfitrionBusqueda;
+
+            if (anfitrion != nullptr) {
+                cout << "Bienvenido Anfitrión!" << endl;
+                int opcion;
+                do {
+                    cout << "\n===== MENÚ ANFITRIÓN =====" << endl;
+                    cout << "1. Ver mis alojamientos" << endl;
+                    cout << "2. Registrar nuevo alojamiento" << endl;
+                    cout << "3. Ver reservaciones de mis alojamientos" << endl;
+                    cout << "4. Modificar alojamiento" << endl;
+                    cout << "5. Ver mi puntuación" << endl;
+                    cout << "6. Salir" << endl;
+                    cout << "Seleccione una opción: ";
+                    cin >> opcion;
+
+                    switch(opcion) {
+                        case 1:
+                            verMisAlojamientos(anfitrion);
+                            break;
+                        case 2:
+                            registrarAlojamientoAnfitrion(anfitrion);
+                            break;
+                        case 3:
+                            verReservacionesAlojamientos(anfitrion);
+                            break;
+                        case 4:
+                            modificarAlojamiento(anfitrion);
+                            break;
+                        case 5:
+                            cout << "Su puntuación actual es: " << anfitrion->getPuntuacion() << "/5.0" << endl;
+                            break;
+                        case 6:
+                            cout << "Gracias por usar nuestro sistema." << endl;
+                            break;
+                        default:
+                            cout << "Opción inválida." << endl;
+                    }
+                } while (opcion != 6);
+                return true;
+            } else {
+                cout << "Anfitrión no encontrado." << endl;
+                return false;
             }
         } else {
             cout << "Opción inválida." << endl;
