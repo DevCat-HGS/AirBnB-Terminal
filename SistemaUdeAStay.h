@@ -321,15 +321,51 @@ private:
     }
 
     void consultarAlojamientosDisponibles() {
-        string departamento, municipio;
         cout << "\n===== CONSULTA DE ALOJAMIENTOS DISPONIBLES =====" << endl;
-        cout << "Ingrese el departamento deseado: ";
+        cout << "Seleccione el criterio de búsqueda:\n";
+        cout << "1. Por ubicación\n";
+        cout << "2. Por rango de precio\n";
+        cout << "3. Ver todos\n";
+        cout << "Opción: ";
+        
+        int opcion;
+        cin >> opcion;
         cin.ignore();
-        getline(cin, departamento);
-        cout << "Ingrese el municipio deseado: ";
-        getline(cin, municipio);
 
-        cout << "\n===== ALOJAMIENTOS DISPONIBLES EN " << municipio << ", " << departamento << " =====" << endl;
+        string departamento, municipio;
+        float precioMin = 0, precioMax = 0;
+        bool filtrarPorUbicacion = false;
+        bool filtrarPorPrecio = false;
+
+        switch(opcion) {
+            case 1:
+                cout << "Ingrese el departamento deseado: ";
+                getline(cin, departamento);
+                cout << "Ingrese el municipio deseado: ";
+                getline(cin, municipio);
+                filtrarPorUbicacion = true;
+                break;
+            case 2:
+                cout << "Ingrese el precio mínimo por noche: $";
+                cin >> precioMin;
+                cout << "Ingrese el precio máximo por noche: $";
+                cin >> precioMax;
+                filtrarPorPrecio = true;
+                break;
+            case 3:
+                break;
+            default:
+                cout << "Opción inválida. Mostrando todos los alojamientos." << endl;
+        }
+
+        cout << "\n===== ALOJAMIENTOS DISPONIBLES =====" << endl;
+         if (filtrarPorUbicacion) {
+             cout << "Ubicación: " << municipio << ", " << departamento << endl;
+         }
+         if (filtrarPorPrecio) {
+             cout << "Rango de precio: $" << precioMin << " - $" << precioMax << " por noche" << endl;
+         }
+         cout << "====================================" << endl;
         bool encontrado = false;
         Nodo<Alojamiento*>* actual = alojamientos.getCabeza();
         
@@ -337,8 +373,19 @@ private:
             monitor.registrarIteracion();
             Alojamiento* alojamiento = actual->getDato();
             
-            if (alojamiento->getDepartamento() == departamento && 
-                alojamiento->getMunicipio() == municipio) {
+            bool cumpleFiltros = true;
+
+            if (filtrarPorUbicacion) {
+                cumpleFiltros = alojamiento->getDepartamento() == departamento && 
+                               alojamiento->getMunicipio() == municipio;
+            }
+
+            if (cumpleFiltros && filtrarPorPrecio) {
+                float precio = alojamiento->getPrecioNoche();
+                cumpleFiltros = precio >= precioMin && precio <= precioMax;
+            }
+
+            if (cumpleFiltros) {
                 encontrado = true;
                 cout << "\nCódigo: " << alojamiento->getCodigo() << endl;
                 cout << "Nombre: " << alojamiento->getNombre() << endl;
